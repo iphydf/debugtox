@@ -1,0 +1,35 @@
+Checks: "-*
+, google-explicit-constructor
+, misc-const-correctness
+, modernize-avoid-bind
+, modernize-deprecated-headers
+, modernize-loop-convert
+, modernize-make-shared
+, modernize-make-unique
+, modernize-pass-by-value
+, modernize-raw-string-literal
+, modernize-return-braced-init-list
+, modernize-use-bool-literals
+, modernize-use-emplace
+, modernize-use-equals-*
+, modernize-use-nullptr
+, modernize-use-override
+, performance-move-const-arg
+, readability-*
+, -readability-avoid-return-with-void-value
+, -readability-braces-around-statements
+, -readability-convert-member-functions-to-static
+, -readability-function-cognitive-complexity
+, -readability-identifier-length
+, -readability-magic-numbers
+, -readability-math-missing-parentheses
+, -readability-redundant-access-specifiers
+, -readability-redundant-member-init
+, -readability-simplify-boolean-expr
+, -readability-suspicious-call-argument
+"
+WarningsAsErrors: "*"
+HeaderFilterRegex: ".*"
+CheckOptions:
+  - key:   readability-uppercase-literal-suffix.NewSuffixes
+    value: f;d;u;L;Lu;LLu;uL;uLL

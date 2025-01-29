@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "release",
+      "binaryDir": "${sourceDir}/_build-release",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_COMPILE_WARNING_AS_ERROR": true,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "CMAKE_OSX_DEPLOYMENT_TARGET": "12"
+      }
+    }
+  ]
+}
