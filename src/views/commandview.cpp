@@ -77,7 +77,7 @@ QString printCommand(const QStringList& parts)
         result.append(
             QStringLiteral("\"%1\"").arg(part.replace(QLatin1Char('"'), QStringLiteral("\\\""))));
     }
-    return QStringLiteral("[%1]").arg(result.join(", "));
+    return QStringLiteral("[%1]").arg(result.join(QStringLiteral(", ")));
 }
 
 // Turns ["part1", "part2", "part3"] into "part1 part2 part3".
