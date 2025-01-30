@@ -24,13 +24,14 @@ public:
     explicit CommandView(QWidget* parent);
     ~CommandView() override;
 
+    void setStatus(const QString& status);
+
 signals:
     void statusUpdate(const QString& status);
 
 private:
     void processCommand(const QString& input);
 
-    void setStatus(const QString& status);
     void addItem(const QString& source, const QString& text);
 
     void previousCommand();

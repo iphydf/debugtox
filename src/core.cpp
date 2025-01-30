@@ -88,6 +88,14 @@ QString Core::address() const
     return QString::fromUtf8(address.toHex()).toUpper();
 }
 
+QString Core::secretKey() const
+{
+    QByteArray secretKey;
+    secretKey.resize(TOX_SECRET_KEY_SIZE);
+    tox_self_get_secret_key(tox.get(), reinterpret_cast<uint8_t*>(secretKey.data()));
+    return QString::fromUtf8(secretKey.toHex()).toUpper();
+}
+
 QString Core::bootstrap(const QString& address, uint16_t port, const QByteArray& public_key)
 {
     if (public_key.size() != TOX_PUBLIC_KEY_SIZE) {

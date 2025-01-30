@@ -21,6 +21,9 @@ namespace {
 const QString srcSystem = QStringLiteral("System");
 const QString srcUser = QStringLiteral("User");
 
+const QString statusIterating = QStringLiteral("iterating");
+const QString statusStopped = QStringLiteral("stopped");
+
 /**
  * Very simple command parser.
  *
@@ -117,8 +120,6 @@ CommandView::CommandView(QWidget* parent)
 {
     ui->setupUi(this);
 
-    setStatus("stopped");
-
     connect(core.get(), &Core::eventReceived, this, [this](QSharedPointer<CoreEvent> event) {
         if (dynamic_cast<Events::DhtGetNodesResponse*>(event.get()) != nullptr) {
             return;
@@ -166,7 +167,7 @@ CommandView::CommandView(QWidget* parent)
             QStringLiteral("start"),
             QStringLiteral("Start iterating the Tox instance"),
             [this](QStringList args) {
-                setStatus("iterating");
+                setStatus(statusIterating);
                 core->start();
             },
         },
@@ -174,7 +175,7 @@ CommandView::CommandView(QWidget* parent)
             QStringLiteral("stop"),
             QStringLiteral("Stop iterating the Tox instance"),
             [this](QStringList args) {
-                setStatus("stopped");
+                setStatus(statusStopped);
                 core->stop();
             },
         },
@@ -191,6 +192,13 @@ CommandView::CommandView(QWidget* parent)
             QStringLiteral("Print the Tox address"),
             [this](QStringList args) {
                 addItem(srcSystem, QStringLiteral("Address: %1").arg(core->address()));
+            },
+        },
+        {
+            QStringLiteral("secret_key"),
+            QStringLiteral("Print the Tox secret key"),
+            [this](QStringList args) {
+                addItem(srcSystem, QStringLiteral("Secret Key: %1").arg(core->secretKey()));
             },
         },
         {
@@ -241,6 +249,7 @@ CommandView::~CommandView() = default;
 
 void CommandView::setStatus(const QString& status)
 {
+    qDebug() << "Status:" << status;
     emit statusUpdate(QStringLiteral("Tox Version: %1.%2.%3 - %4")
                           .arg(tox_version_major())
                           .arg(tox_version_minor())

@@ -32,6 +32,7 @@ public:
     QString reload(CoreOptions* options);
 
     QString address() const;
+    QString secretKey() const;
 
     QString bootstrap(const QString& address, uint16_t port, const QByteArray& public_key);
     QString addTcpRelay(const QString& address, uint16_t port, const QByteArray& public_key);
