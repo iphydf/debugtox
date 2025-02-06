@@ -2,5 +2,5 @@
 
 set -eux
 
-docker build -t toxchat/debugtox:wasm -f docker/wasm.Dockerfile .
+docker build -t toxchat/debugtox:wasm -f platform/wasm/wasm.Dockerfile .
 docker run --rm -it -p 8000:8000 toxchat/debugtox:wasm

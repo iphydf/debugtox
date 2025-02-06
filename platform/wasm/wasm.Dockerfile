@@ -1,13 +1,13 @@
 FROM toxchat/qtox:wasm-builder AS builder
 
-ENV PKG_CONFIG_PATH="/work/lib/pkgconfig"
+ENV PKG_CONFIG_PATH="/opt/buildhome/lib/pkgconfig"
 
 COPY CMakeLists.txt /qtox/
 COPY src /qtox/src/
-RUN . "/work/emsdk/emsdk_env.sh" \
+RUN . "/opt/buildhome/emsdk/emsdk_env.sh" \
  && emcmake cmake \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_FIND_ROOT_PATH="/work;/work/qt" \
+  -DCMAKE_FIND_ROOT_PATH="/opt/buildhome;/opt/buildhome/qt" \
   -GNinja \
   -B_build-wasm \
   -H. \
@@ -33,22 +33,22 @@ RUN apk add curl \
   python3-dev
 
 # Create a virtual environment for qtwasmserver.
-RUN python3 -m venv /work/venv \
- && . /work/venv/bin/activate \
+RUN python3 -m venv /opt/buildhome/venv \
+ && . /opt/buildhome/venv/bin/activate \
  && CFLAGS=-Wno-int-conversion pip3 install brotli httpcompressionserver netifaces \
- && curl -L https://raw.githubusercontent.com/qt/qtbase/refs/heads/dev/util/wasm/qtwasmserver/qtwasmserver.py -o /work/venv/bin/qtwasmserver.py \
- && chmod +x /work/venv/bin/qtwasmserver.py
+ && curl -L https://raw.githubusercontent.com/qt/qtbase/refs/heads/dev/util/wasm/qtwasmserver/qtwasmserver.py -o /opt/buildhome/venv/bin/qtwasmserver.py \
+ && chmod +x /opt/buildhome/venv/bin/qtwasmserver.py
 
 FROM alpine:3.21
 
 RUN apk add python3
 
-COPY --from=venv /work/venv /work/venv
+COPY --from=venv /opt/buildhome/venv /opt/buildhome/venv
 COPY --from=builder /qtox/_site /qtox/_site
 
 ENV PORT=8000
 WORKDIR /qtox/_site
-CMD . /work/venv/bin/activate \
+CMD . /opt/buildhome/venv/bin/activate \
  && qtwasmserver.py \
  --cross-origin-isolation \
  --all-interfaces \
