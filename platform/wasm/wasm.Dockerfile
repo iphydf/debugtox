@@ -13,14 +13,16 @@ RUN . "/opt/buildhome/emsdk/emsdk_env.sh" \
   -H. \
  && cmake --build _build-wasm
 
-RUN mkdir _site \
+COPY platform/wasm/_headers _site/
+RUN cp \
+  _build-wasm/qtloader.js \
+  _build-wasm/qtlogo.svg \
+  _build-wasm/debugtox.js \
+  _build-wasm/debugtox.wasm \
+  _site \
  && cp \
- _build-wasm/qtloader.js \
- _build-wasm/qtlogo.svg \
- _build-wasm/debugtox.html \
- _build-wasm/debugtox.js \
- _build-wasm/debugtox.wasm \
- _site
+  _build-wasm/debugtox.html \
+  _site/index.html
 
 FROM alpine:3.21 AS venv
 
