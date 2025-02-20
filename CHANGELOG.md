@@ -1,3 +1,11 @@
+<a name="v0.0.2-rc.1"></a>
+
+## v0.0.2-rc.1 (2025-02-20)
+
+### Release notes
+
+Second release of the Tox API debug tool. It doesn't do very much yet, but feel free to try it out and send feature requests.
+
 <a name="v0.0.1"></a>
 
 ## v0.0.1 (2025-02-16)
